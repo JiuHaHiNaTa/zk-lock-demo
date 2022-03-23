@@ -8,3 +8,6 @@
    
    Curator Recipes为Zk提供了高级API包括分布式锁的实现。
 
+   Zk连接部分用ZkCuratorUtils中的对应方法代替
+
+   参考文档：https://www.cnblogs.com/crazymakercircle/p/14504520.html
