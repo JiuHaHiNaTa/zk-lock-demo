@@ -18,8 +18,19 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    zookeeperVersion = '3.8.0'
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    //zk
+    implementation group: 'org.apache.zookeeper', name: 'zookeeper', version: rootProject.ext.zookeeperVersion
+    //zk客户端
+    implementation group: 'org.apache.curator', name: 'curator-framework', version: '2.12.0'
+    //zk 高级API
+    implementation group: 'org.apache.curator', name: 'curator-recipes', version: '2.12.0'
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
