@@ -19,7 +19,7 @@ repositories {
 }
 
 ext {
-    zookeeperVersion = '3.8.0'
+    zookeeperVersion = '3.4.14'
 }
 
 dependencies {

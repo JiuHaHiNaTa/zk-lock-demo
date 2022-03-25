@@ -6,6 +6,7 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
+import org.springframework.util.StringUtils;
 
 import java.util.Collections;
 import java.util.List;
@@ -35,7 +36,7 @@ public class ZkLock implements Lock {
 
     public static final long WAIT_TIME = 1000;
 
-    CuratorFramework client = null;
+    public CuratorFramework client = null;
 
     /**
      * 排队短号路径
@@ -64,7 +65,7 @@ public class ZkLock implements Lock {
             try {
                 //检查Zookeeper是否有锁节点
                 if (!ZkCuratorUtils.checkNodeExist(this.client, ZK_PATH)) {
-                    ZkCuratorUtils.createNode(this.client, ZK_PATH, CreateMode.PERSISTENT);
+                    ZkCuratorUtils.createNode(this.client, ZK_PATH, CreateMode.EPHEMERAL);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -173,7 +174,7 @@ public class ZkLock implements Lock {
         }
         //删除临时节点
         try {
-            if (ZkCuratorUtils.checkNodeExist(this.client, LOCKED_PATH)) {
+            if (!StringUtils.isEmpty(LOCKED_PATH) && ZkCuratorUtils.checkNodeExist(this.client, LOCKED_PATH)) {
                 ZkCuratorUtils.deleteNode(this.client, LOCKED_PATH);
             }
         } catch (Exception e) {

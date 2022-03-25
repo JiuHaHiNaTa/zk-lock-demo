@@ -29,9 +29,10 @@ public class ZkCuratorUtils {
     /**
      * 监听器逻辑线程
      */
+    //todo 编码规范不允许Executors创建线程池
     private static ExecutorService pool = Executors.newFixedThreadPool(2);
 
-    public static final String ZK_ADDRESS = "";
+    public static final String ZK_ADDRESS = "192.168.12.148:2181";
 
     public static CuratorFramework conn() {
         CuratorFramework client = CuratorFrameworkFactory.builder()
@@ -39,7 +40,7 @@ public class ZkCuratorUtils {
                 .connectionTimeoutMs(5000)
                 //RetryOneTime RetryNTimes(times,second)
                 .retryPolicy(new RetryNTimes(3, 3000))
-                .namespace("/curator")
+                .namespace("curator")
                 .build();
         client.start();
         log.info("Zk客户端已经连接");
